@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Sandbox</h2>
+    
+    <h4>Get Action</h4>
+    <form action="{{ path('app_sandbox_get') }}">
+        <div class="form-row">
+            <label for="destiny">Destination code:</label>
+            <input type="text" id="destiny" name="destiny" maxlength="3">
+            <input type="submit" value="Request!">
+        </div>
+    </form>
+
+    <br>
+    <hr>
+    
+    <h4>Post Action</h4>
+    <form action="{{ path('app_sandbox_post') }}" method="post">
+        <div class="form-row">
+            <label for="sincro_origin">Origin code:</label>
+            <input type="text" id="sincro_origin" name="sincro[origin]" maxlength="3">
+        </div>
+        <div class="form-row">
+            <label for="sincro_destiny">Destination code:</label>
+            <input type="text" id="sincro_destiny" name="sincro[destiny]" maxlength="3">
+        </div>
+        <div class="form-row">
+            <label for="sincro_file">Database file:</label>
+            <input type="file" id="sincro_file" name="sincro[file]" maxlength="3">
+        </div>
+        <div class="form-row">
+            <input type="submit" value="Post!">
+        </div>
+    </form>
+{% endblock %}
