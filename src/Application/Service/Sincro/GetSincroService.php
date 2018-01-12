@@ -13,7 +13,7 @@ class GetSincroService extends SincroService
      */
     public function execute($request = null)
     {
-        $pending = $this->sincroRepository->ofDestiny(
+        $pending = $this->sincroRepository->ofDestinyPendingToSync(
             $request->destiny()
         );
 

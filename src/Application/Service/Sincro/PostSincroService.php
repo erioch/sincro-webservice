@@ -13,10 +13,20 @@ class PostSincroService extends SincroService
      */
     public function execute($request = null)
     {
+        $origin = $request->origin();
+        $destiny = $request->destiny();
+        $file = $request->uploadedFile();
+
+        // Generate a unique name for the file before saving it
+        $filename = md5(uniqid()).'.'.$file->guessExtension();
+
+        // Move the file to the directory where brochures are stored
+        $file->move($this->sincroUploadsDir, $filename);
+
         $sincro = Sincro::makePost(
-            $request->origin(),
-            $request->destiny(),
-            $request->file()
+            $origin,
+            $destiny,
+            $filename
         );
 
         $this->sincroRepository->add($sincro);

@@ -3,53 +3,32 @@
 namespace App\Repository;
 
 use App\Entity\Sincro;
-use Doctrine\ORM\EntityManagerInterface;
 
-class SincroRepository
+interface SincroRepository
 {
     /**
-     * @var EntityManagerInterface
+     * @param int $sincroId
+     *
+     * @return Sincro
      */
-    private $em;
+    public function ofIdOrFail($sincroId): Sincro;
 
     /**
-     * @var \Doctrine\ORM\EntityRepository
+     * @param string $destiny
+     *
+     * @return Sincro[]
      */
-    private $repository;
+    public function ofDestinyPendingToSync($destiny);
 
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-        $this->repository = $em->getRepository(Sincro::class);
-    }
+    /**
+     * @param Sincro $sincro
+     */
+    public function add(Sincro $sincro);
 
-    public function ofDestiny($destiny)
-    {
-        return $this->repository->findBy(
-            [
-                'destiny' => $destiny,
-                'syncDate' => null,
-            ],
-            [
-                'postDate' => 'ASC',
-            ]
-        );
-    }
+    /**
+     * @param Sincro $sincro
+     */
+    public function remove(Sincro $sincro);
 
-    public function flush()
-    {
-        $this->em->flush();
-    }
-
-    public function add(Sincro $sincro)
-    {
-        $this->em->persist($sincro);
-        $this->em->flush();
-    }
-
-    public function remove(Sincro $sincro)
-    {
-        $this->em->remove($sincro);
-        $this->em->flush();
-    }
+    public function flush();
 }

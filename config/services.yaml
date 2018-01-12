@@ -2,6 +2,10 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    secret: '%env(APP_SECRET)%'
+    sincro_files: 'public/uploads/sincro'
+    sincro_uploads: '%kernel.project_dir%/%sincro_files%'
+    sincro_downloads: '%router.request_context.scheme%://%router.request_context.host%/%sincro_files%'
 
 services:
     # default configuration for services in *this* file
@@ -26,3 +30,33 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\Application\Service\Sincro\GetSincroService:
+        public: true
+        arguments:
+            $uploadsDir: '%sincro_uploads%'
+
+    App\Application\Service\Sincro\PostSincroService:
+        public: true
+        arguments:
+            $uploadsDir: '%sincro_uploads%'
+
+    App\Application\Service\Sincro\PutSincroService:
+        public: true
+        arguments:
+            $uploadsDir: '%sincro_uploads%'
+
+    App\Application\Service\Sincro\ViewSincroService:
+        public: true
+        arguments:
+            $uploadsDir: '%sincro_uploads%'
+
+    App\Application\Service\Sincro\SincroResponse:
+        public: true
+        arguments:
+            $uploadsDir: '%sincro_uploads%'
+            $downloadBaseUrl: '%sincro_downloads%'
+
+    App\Application\Service\Security\TokenValidator:
+        public: true
+        arguments:
+            $secret: '%secret%'

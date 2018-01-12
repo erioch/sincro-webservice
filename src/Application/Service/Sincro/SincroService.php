@@ -7,10 +7,23 @@ use App\Repository\SincroRepository;
 
 abstract class SincroService implements ApplicationService
 {
+    /**
+     * @var SincroRepository
+     */
     protected $sincroRepository;
 
-    public function __construct(SincroRepository $sincroRepository)
+    /**
+     * @var string
+     */
+    protected $sincroUploadsDir;
+
+    /**
+     * @param SincroRepository $sincroRepository
+     * @param string           $uploadsDir
+     */
+    public function __construct(SincroRepository $sincroRepository, $uploadsDir)
     {
         $this->sincroRepository = $sincroRepository;
+        $this->sincroUploadsDir = $uploadsDir;
     }
 }

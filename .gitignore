@@ -1,6 +1,6 @@
 
 ###> symfony/framework-bundle ###
-.idea
+.idea/
 .env
 .php_cs.cache
 /public/bundles/

@@ -2,12 +2,23 @@
 
 namespace App\Application\Service\Sincro;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class PostSincroRequest
 {
     private $origin;
     private $destiny;
+
+    /**
+     * @var UploadedFile
+     */
     private $file;
 
+    /**
+     * @param string       $origin
+     * @param string       $destiny
+     * @param UploadedFile $file
+     */
     public function __construct($origin, $destiny, $file)
     {
         $this->origin = $origin;
@@ -25,7 +36,10 @@ class PostSincroRequest
         return $this->destiny;
     }
 
-    public function file()
+    /**
+     * @return UploadedFile
+     */
+    public function uploadedFile()
     {
         return $this->file;
     }

@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            <style>
-                label {
-                    width: 125px;
-                    display: inline-block;
-                }
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-                .form-row {
-                    margin-bottom: 10px;
-                }
-            </style>
-        {% endblock %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+        <style>
+            .container {
+                margin-top: 30px;
+            }
+        </style>
+        {% block stylesheets %}{% endblock %}
+
+        <title>{% block title %}Dubai Web Service{% endblock %}</title>
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

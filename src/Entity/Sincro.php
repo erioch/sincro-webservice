@@ -56,56 +56,75 @@ class Sincro
     /**
      * @var string
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
-    private $dbFile;
+    private $filename;
 
     /**
      * Sincro constructor.
      *
      * @param $origin
      * @param $destiny
-     * @param $dbFile
+     * @param $filename
      */
-    private function __construct($origin, $destiny, $dbFile)
+    private function __construct($origin, $destiny, $filename)
     {
-        $this->origin = $origin;
-        $this->destiny = $destiny;
-        $this->setFile($dbFile);
+        $this->setOrigin($origin);
+        $this->setDestiny($destiny);
+        $this->setFile($filename);
 
         $this->postDate = new \DateTimeImmutable();
     }
 
     /**
-     * @param $dbFile
+     * @param string $origin
      */
-    public function setFile($dbFile)
+    public function setOrigin($origin)
     {
-        if (!$dbFile) {
-            throw new \InvalidArgumentException('DB file is empty!');
+        $origin = trim($origin);
+        if (!$origin) {
+            throw new \InvalidArgumentException('Origin center can not be null!');
         }
 
-        $this->dbFile = base64_encode(stream_get_contents($dbFile));
+        $this->origin = $origin;
     }
 
     /**
-     * @return bool|string
+     * @param string $destiny
      */
-    public function readFile()
+    public function setDestiny($destiny)
     {
-        return base64_decode($this->dbFile);
+        $destiny = trim($destiny);
+        if (!$destiny) {
+            throw new \InvalidArgumentException('Destiny center can not be null!');
+        }
+
+        $this->destiny = $destiny;
+    }
+
+    /**
+     * @param $filename
+     */
+    public function setFile($filename)
+    {
+        $filename = trim($filename);
+        if (!$filename) {
+            throw new \InvalidArgumentException('DB file is empty!');
+        }
+
+        $this->filename = $filename;
     }
 
     /**
      * @param $origin
      * @param $destiny
-     * @param $dbFile
+     * @param $filename
      *
      * @return Sincro
      */
-    public static function makePost($origin, $destiny, $dbFile)
+    public static function makePost($origin, $destiny, $filename)
     {
-        return new self($origin, $destiny, $dbFile);
+        return new self($origin, $destiny, $filename);
     }
 
     public function request()
@@ -116,5 +135,40 @@ class Sincro
     public function sync()
     {
         $this->syncDate = new \DateTimeImmutable();
+    }
+
+    public function id()
+    {
+        return $this->id;
+    }
+
+    public function origin()
+    {
+        return $this->origin;
+    }
+
+    public function destiny()
+    {
+        return $this->destiny;
+    }
+
+    public function postDate()
+    {
+        return $this->postDate;
+    }
+
+    public function requestDate()
+    {
+        return $this->requestDate;
+    }
+
+    public function syncDate()
+    {
+        return $this->syncDate;
+    }
+
+    public function filename()
+    {
+        return $this->filename;
     }
 }

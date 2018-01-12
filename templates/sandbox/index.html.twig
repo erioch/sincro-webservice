@@ -2,35 +2,76 @@
 
 {% block body %}
     <h2>Sandbox</h2>
-    
-    <h4>Get Action</h4>
-    <form action="{{ path('app_sandbox_get') }}">
-        <div class="form-row">
-            <label for="destiny">Destination code:</label>
-            <input type="text" id="destiny" name="destiny" maxlength="3">
-            <input type="submit" value="Request!">
+    <br>
+    <div class="card">
+        <div class="card-header">Post Action (make)</div>
+        <div class="card-body">
+            <form action="{{ path('app_sandbox_post') }}" method="post" enctype="multipart/form-data">
+                <div class="form-group row">
+                    <label for="sincro_origin" class="col-sm-2 col-form-label">Origin code:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control form-control-sm" id="sincro_origin" name="sincro[origin]" maxlength="3">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="sincro_destiny" class="col-sm-2 col-form-label">Destination code:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control form-control-sm" id="sincro_destiny" name="sincro[destiny]" maxlength="3">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="sincro_file" class="col-sm-2 col-form-label">Database file:</label>
+                    <div class="col-sm-4">
+                        <input type="file" class="form-control form-control-sm" id="sincro_file" name="sincro[file]" maxlength="3">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                </div>
+                <input type="hidden" name="token" value="{{ secret }}">
+            </form>
         </div>
-    </form>
+    </div>
 
     <br>
-    <hr>
-    
-    <h4>Post Action</h4>
-    <form action="{{ path('app_sandbox_post') }}" method="post">
-        <div class="form-row">
-            <label for="sincro_origin">Origin code:</label>
-            <input type="text" id="sincro_origin" name="sincro[origin]" maxlength="3">
+
+    <div class="card">
+        <div class="card-header">Get Action (request)</div>
+        <div class="card-body">
+            <form action="{{ path('app_sandbox_get') }}" method="get">
+                <div class="form-group row">
+                    <label for="destiny" class="col-sm-2 col-form-label">Destination code:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control form-control-sm" id="destiny" name="destiny" maxlength="3">
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="submit" class="btn btn-sm btn-primary">Request</button>
+                    </div>
+                </div>
+                <input type="hidden" name="token" value="{{ secret }}">
+            </form>
         </div>
-        <div class="form-row">
-            <label for="sincro_destiny">Destination code:</label>
-            <input type="text" id="sincro_destiny" name="sincro[destiny]" maxlength="3">
+    </div>
+
+    <br>
+
+    <div class="card">
+        <div class="card-header">Put Action (sync)</div>
+        <div class="card-body">
+            <form action="{{ path('app_sandbox_put') }}" method="put">
+                <div class="form-group row">
+                    <label for="sincro_id" class="col-sm-2 col-form-label">Sincro id:</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control form-control-sm" id="sincro_id" name="sincro_id">
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="submit" class="btn btn-sm btn-primary">Sync</button>
+                    </div>
+                </div>
+                <input type="hidden" name="token" value="{{ secret }}">
+            </form>
         </div>
-        <div class="form-row">
-            <label for="sincro_file">Database file:</label>
-            <input type="file" id="sincro_file" name="sincro[file]" maxlength="3">
-        </div>
-        <div class="form-row">
-            <input type="submit" value="Post!">
-        </div>
-    </form>
+    </div>
 {% endblock %}
