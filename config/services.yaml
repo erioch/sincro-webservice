@@ -1,7 +1,6 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: 'en'
     secret: '%env(APP_SECRET)%'
     sincro_files: 'public/uploads/sincro'
     sincro_uploads: '%kernel.project_dir%/%sincro_files%'

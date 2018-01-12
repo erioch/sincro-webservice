@@ -4,4 +4,3 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         secret: '%secret%'
-        base_url: '%sincro_downloads%'

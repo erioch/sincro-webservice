@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Sincro
 {
+    const ORIGIN_MAX_LENGTH = 3;
+    const DESTINY_MAX_LENGTH = 3;
+
     /**
      * @var int
      *
@@ -86,6 +89,13 @@ class Sincro
             throw new \InvalidArgumentException('Origin center can not be null!');
         }
 
+        if (strlen($origin) !== self::ORIGIN_MAX_LENGTH) {
+            throw new \InvalidArgumentException(sprintf(
+                'A origin center must have a lenght of %d chars',
+                self::ORIGIN_MAX_LENGTH
+            ));
+        }
+
         $this->origin = $origin;
     }
 
@@ -97,6 +107,13 @@ class Sincro
         $destiny = trim($destiny);
         if (!$destiny) {
             throw new \InvalidArgumentException('Destiny center can not be null!');
+        }
+
+        if (strlen($destiny) !== self::DESTINY_MAX_LENGTH) {
+            throw new \InvalidArgumentException(sprintf(
+                'A destiny center must have a lenght of %d chars',
+                self::DESTINY_MAX_LENGTH
+            ));
         }
 
         $this->destiny = $destiny;
@@ -135,11 +152,6 @@ class Sincro
     public function sync()
     {
         $this->syncDate = new \DateTimeImmutable();
-    }
-
-    public function id()
-    {
-        return $this->id;
     }
 
     public function origin()
