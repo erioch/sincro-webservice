@@ -2,6 +2,8 @@
 
 namespace App\Application\Service\Sincro;
 
+use App\Entity\SincroId;
+
 class PutSincroService extends SincroService
 {
     /**
@@ -10,10 +12,10 @@ class PutSincroService extends SincroService
     public function execute($request = null)
     {
         $sincro = $this->sincroRepository->ofIdOrFail(
-            $request->sincroId()
+            new SincroId($request->sincroId())
         );
 
-        if (!$sincro->syncDate()) {
+        if ($sincro->requestDate() && !$sincro->syncDate()) {
             $sincro->sync();
             $this->sincroRepository->flush();
         }

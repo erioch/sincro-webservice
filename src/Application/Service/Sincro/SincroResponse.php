@@ -39,7 +39,7 @@ class SincroResponse
     public function toArray(Sincro $sincro)
     {
         return [
-            'id' => $sincro->id(),
+            'id' => $sincro->id()->id(),
             'origin' => $sincro->origin(),
             'destiny' => $sincro->destiny(),
             'post' => $sincro->postDate()->format('Y-m-d H:i:s'),

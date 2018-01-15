@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Application\Service\Security\TokenValidator;
 use App\Application\Service\Sincro\GetSincroRequest;
 use App\Application\Service\Sincro\GetSincroService;
+use App\Application\Service\Sincro\ViewSincrosService;
 use App\Application\Service\Sincro\PostSincroRequest;
 use App\Application\Service\Sincro\PostSincroService;
 use App\Application\Service\Sincro\PutSincroRequest;
@@ -25,11 +26,17 @@ class SandboxController extends Controller
     /**
      * @Route("/")
      *
+     * @param ViewSincrosService $getSincros
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(ViewSincrosService $getSincros)
     {
-        return $this->render('sandbox/index.html.twig');
+        $sincros = $getSincros->execute();
+
+        return $this->render('sandbox/index.html.twig', [
+            'sincros' => $sincros,
+        ]);
     }
 
     /**

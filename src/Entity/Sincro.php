@@ -9,15 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Sincro
 {
-    const ORIGIN_MAX_LENGTH = 3;
-    const DESTINY_MAX_LENGTH = 3;
+    const CENTER_CODE_LENGTH = 3;
 
     /**
-     * @var int
+     * @var SincroId
      *
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(type="sincro_id")
      */
     private $id;
 
@@ -66,12 +64,14 @@ class Sincro
     /**
      * Sincro constructor.
      *
+     * @param SincroId $sincroId
      * @param $origin
      * @param $destiny
      * @param $filename
      */
-    private function __construct($origin, $destiny, $filename)
+    private function __construct(SincroId $sincroId, $origin, $destiny, $filename)
     {
+        $this->id = $sincroId;
         $this->setOrigin($origin);
         $this->setDestiny($destiny);
         $this->setFile($filename);
@@ -81,6 +81,8 @@ class Sincro
 
     /**
      * @param string $origin
+     *
+     * @throws InvalidCenterCodeLength
      */
     public function setOrigin($origin)
     {
@@ -89,11 +91,8 @@ class Sincro
             throw new \InvalidArgumentException('Origin center can not be null!');
         }
 
-        if (strlen($origin) !== self::ORIGIN_MAX_LENGTH) {
-            throw new \InvalidArgumentException(sprintf(
-                'A origin center must have a lenght of %d chars',
-                self::ORIGIN_MAX_LENGTH
-            ));
+        if (strlen($origin) !== self::CENTER_CODE_LENGTH) {
+            throw InvalidCenterCodeLength::fromLength(self::CENTER_CODE_LENGTH);
         }
 
         $this->origin = $origin;
@@ -101,6 +100,8 @@ class Sincro
 
     /**
      * @param string $destiny
+     *
+     * @throws InvalidCenterCodeLength
      */
     public function setDestiny($destiny)
     {
@@ -109,11 +110,8 @@ class Sincro
             throw new \InvalidArgumentException('Destiny center can not be null!');
         }
 
-        if (strlen($destiny) !== self::DESTINY_MAX_LENGTH) {
-            throw new \InvalidArgumentException(sprintf(
-                'A destiny center must have a lenght of %d chars',
-                self::DESTINY_MAX_LENGTH
-            ));
+        if (strlen($destiny) !== self::CENTER_CODE_LENGTH) {
+            throw InvalidCenterCodeLength::fromLength(self::CENTER_CODE_LENGTH);
         }
 
         $this->destiny = $destiny;
@@ -133,15 +131,21 @@ class Sincro
     }
 
     /**
+     * @param SincroId $sincroId
      * @param $origin
      * @param $destiny
      * @param $filename
      *
      * @return Sincro
      */
-    public static function makePost($origin, $destiny, $filename)
+    public static function makePost(SincroId $sincroId, $origin, $destiny, $filename)
     {
-        return new self($origin, $destiny, $filename);
+        return new self($sincroId, $origin, $destiny, $filename);
+    }
+
+    public function id()
+    {
+        return $this->id;
     }
 
     public function request()

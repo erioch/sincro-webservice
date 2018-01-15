@@ -63,8 +63,16 @@
             <form action="{{ path('app_sandbox_put') }}" method="put">
                 <div class="form-group row">
                     <label for="sincro_id" class="col-sm-2 col-form-label">Sincro id:</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control form-control-sm" id="sincro_id" name="sincro_id">
+                    <div class="col-sm-5">
+                        <select name="sincro_id" id="sincro_id" class="form-control form-control-sm">
+                            <option>Select a sincro to sync</option>
+                            {% for sincro in sincros %}
+                                <option value="{{ sincro.id }}">
+                                    ({{ sincro.origin }} >> {{ sincro.destiny }})
+                                    {{ sincro.id }}
+                                </option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="col-sm-1">
                         <button type="submit" class="btn btn-sm btn-primary">Sync</button>

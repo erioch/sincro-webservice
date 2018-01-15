@@ -26,6 +26,12 @@
     <filter>
         <whitelist>
             <directory>./src/</directory>
+            <exclude>
+                <directory>./src/Controller/</directory>
+                <directory>./src/Persistance/Doctrine/</directory>
+                <file>./src/Kernel.php</file>
+                <file>./src/Application/Service/Sincro/SincroResponse.php</file>
+            </exclude>
         </whitelist>
     </filter>
 

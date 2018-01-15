@@ -24,6 +24,7 @@ class PostSincroService extends SincroService
         $file->move($this->sincroUploadsDir, $filename);
 
         $sincro = Sincro::makePost(
+            $this->sincroRepository->nextIdentity(),
             $origin,
             $destiny,
             $filename

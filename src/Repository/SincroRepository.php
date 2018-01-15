@@ -3,15 +3,19 @@
 namespace App\Repository;
 
 use App\Entity\Sincro;
+use App\Entity\SincroId;
+use App\Entity\SincroNotFoundException;
 
 interface SincroRepository
 {
     /**
-     * @param int $sincroId
+     * @param SincroId $sincroId
      *
      * @return Sincro
+     *
+     * @throws SincroNotFoundException
      */
-    public function ofIdOrFail($sincroId): Sincro;
+    public function ofIdOrFail(SincroId $sincroId): Sincro;
 
     /**
      * @param string $destiny
@@ -19,6 +23,11 @@ interface SincroRepository
      * @return Sincro[]
      */
     public function ofDestinyPendingToSync($destiny);
+
+    /**
+     * @return Sincro[]
+     */
+    public function requestedPendingToSync();
 
     /**
      * @param Sincro $sincro
@@ -30,5 +39,8 @@ interface SincroRepository
      */
     public function remove(Sincro $sincro);
 
-    public function flush();
+    /**
+     * @return SincroId
+     */
+    public function nextIdentity(): SincroId;
 }

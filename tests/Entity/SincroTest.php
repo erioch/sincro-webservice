@@ -2,7 +2,9 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\InvalidCenterCodeLength;
 use App\Entity\Sincro;
+use App\Entity\SincroId;
 use PHPUnit\Framework\TestCase;
 
 class SincroTest extends TestCase
@@ -10,6 +12,7 @@ class SincroTest extends TestCase
     public function testMakePostReturnsSincroObject()
     {
         $sincro = Sincro::makePost(
+            new SincroId(),
             'ABC',
             'XYZ',
             'a_file.zip'
@@ -24,6 +27,7 @@ class SincroTest extends TestCase
     public function testNewSincroHasAPostDate()
     {
         $sincro = Sincro::makePost(
+            new SincroId(),
             'ABC',
             'XYZ',
             'a_file.zip'
@@ -35,6 +39,7 @@ class SincroTest extends TestCase
     public function testNewSincroHasNoRequestAndSyncDate()
     {
         $sincro = Sincro::makePost(
+            new SincroId(),
             'ABC',
             'XYZ',
             'a_file.zip'
@@ -48,87 +53,67 @@ class SincroTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        Sincro::makePost(null, 'XYZ', 'a_file.zip');
+        Sincro::makePost(new SincroId(), null, 'XYZ', 'a_file.zip');
     }
 
     public function testDestinyIsNotEmpty()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        Sincro::makePost('ABC', null, 'a_file.zip');
+        Sincro::makePost(new SincroId(), 'ABC', null, 'a_file.zip');
     }
 
     public function testFilenameIsNotEmpty()
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        Sincro::makePost('ABC', 'XYZ', null);
+        Sincro::makePost(new SincroId(), 'ABC', 'XYZ', null);
     }
 
-    public function testOriginWithShortLenghtIsInvalid()
+    public function testOriginWithLongCodeIsInvalid()
     {
-        $origin = 'AB';
-        $destiny = 'XYZ';
-
-        $this->expectExceptionMessage(sprintf(
-            'A origin center must have a lenght of %d chars',
-            Sincro::ORIGIN_MAX_LENGTH
-        ));
+        $this->expectException(InvalidCenterCodeLength::class);
 
         Sincro::makePost(
-            $origin,
-            $destiny,
+            new SincroId(),
+            'ABCD',
+            'XYZ',
             'a_file.zip'
         );
     }
 
-    public function testOriginWithLongLenghtIsInvalid()
+    public function testOriginWithShortCodeIsInvalid()
     {
-        $origin = 'ABCD';
-        $destiny = 'XYZ';
-
-        $this->expectExceptionMessage(sprintf(
-            'A origin center must have a lenght of %d chars',
-            Sincro::ORIGIN_MAX_LENGTH
-        ));
+        $this->expectException(InvalidCenterCodeLength::class);
 
         Sincro::makePost(
-            $origin,
-            $destiny,
+            new SincroId(),
+            'AB',
+            'XYZ',
             'a_file.zip'
         );
     }
 
-    public function testDestinyWithShortLenghtIsInvalid()
+    public function testDestinyWithLongCodeIsInvalid()
     {
-        $origin = 'ABC';
-        $destiny = 'XY';
-
-        $this->expectExceptionMessage(sprintf(
-            'A destiny center must have a lenght of %d chars',
-            Sincro::ORIGIN_MAX_LENGTH
-        ));
+        $this->expectException(InvalidCenterCodeLength::class);
 
         Sincro::makePost(
-            $origin,
-            $destiny,
+            new SincroId(),
+            'ABC',
+            'XYZ0',
             'a_file.zip'
         );
     }
 
-    public function testDestinyWithLongLenghtIsInvalid()
+    public function testDestinyWithShortCodeIsInvalid()
     {
-        $origin = 'ABC';
-        $destiny = 'XYZ0';
-
-        $this->expectExceptionMessage(sprintf(
-            'A destiny center must have a lenght of %d chars',
-            Sincro::ORIGIN_MAX_LENGTH
-        ));
+        $this->expectException(InvalidCenterCodeLength::class);
 
         Sincro::makePost(
-            $origin,
-            $destiny,
+            new SincroId(),
+            'ABC',
+            'XY',
             'a_file.zip'
         );
     }
@@ -136,6 +121,7 @@ class SincroTest extends TestCase
     public function testRequestUpdatesRequestDate()
     {
         $sincro = Sincro::makePost(
+            new SincroId(),
             'ABC',
             'XYZ',
             'a_file.zip'
@@ -152,6 +138,7 @@ class SincroTest extends TestCase
     public function testSyncUpdatesSyncDate()
     {
         $sincro = Sincro::makePost(
+            new SincroId(),
             'ABC',
             'XYZ',
             'a_file.zip'

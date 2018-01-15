@@ -2,6 +2,8 @@
 
 namespace App\Application\Service\Sincro;
 
+use App\Entity\SincroId;
+
 class ViewSincroService extends SincroService
 {
     /**
@@ -12,7 +14,7 @@ class ViewSincroService extends SincroService
     public function execute($request = null)
     {
         return $this->sincroRepository->ofIdOrFail(
-            $request->sincroId()
+            new SincroId($request->sincroId())
         );
     }
 }
