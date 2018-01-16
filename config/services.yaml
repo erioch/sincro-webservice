@@ -29,15 +29,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    App\Repository\DoctrineSincroRepository: ~
-    App\Repository\SincroRepository: '@App\Repository\DoctrineSincroRepository'
+    App\Repository\SincroRepository: '@App\Persistance\Doctrine\DoctrineSincroRepository'
 
     App\Application\Service\Sincro\GetSincroService:
-        public: true
-        arguments:
-            $uploadsDir: '%sincro_uploads%'
-
-    App\Application\Service\Sincro\GetSincrosService:
         public: true
         arguments:
             $uploadsDir: '%sincro_uploads%'
@@ -53,6 +47,11 @@ services:
             $uploadsDir: '%sincro_uploads%'
 
     App\Application\Service\Sincro\ViewSincroService:
+        public: true
+        arguments:
+            $uploadsDir: '%sincro_uploads%'
+
+    App\Application\Service\Sincro\ViewSincrosService:
         public: true
         arguments:
             $uploadsDir: '%sincro_uploads%'
